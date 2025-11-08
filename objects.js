@@ -1,4 +1,4 @@
-// In this chapter we will going to learn about javascript onject and its methods
+// In this chapter we will going to learn about javascript object and its methods
 
 let person = {
     firstName: "John",
