@@ -19,6 +19,11 @@ console.log(fruits);
 
 //Array methods
 
+//copy array using spread operator
+console.log('Copy array using spread operator');
+let copiedFruits = [...fruits];
+console.log(copiedFruits);
+
 //array push method
 console.log('Array push method');
 fruits.push("Orange"); //this will add data at the end of the array
