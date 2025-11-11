@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project 1</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      main {
+        width: 100%;
+        height: 100vh;
+        background-color: #454444;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #000000;
+      }
+      #btn {
+        display: flex;
+        width: 200px;
+        height: 50px;
+        background-color: #03672b;
+        text-align: center;
+        justify-content: center;
+        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+          sans-serif;
+        color: aliceblue;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <main>
+      <input type="file" id="inpt" hidden />
+      <div id="btn">Upload</div>
+    </main>
+    <script>
+      let inp = document.getElementById("inpt");
+      let btn = document.getElementById("btn");
+
+
+      btn.addEventListener("click", function (e) {
+        inp.click();
+        console.dir(inp);
+      });
+      inp.addEventListener("change", function (){
+        btn.textContent = inp.files[0].name;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    :root {
+        /* Define colors as CSS variables for easy updates */
+        --bg-color-static: #0A0A0A;
+        --text-color-static: #00FFFF;
+        --flash-color: #FFF700;
+    }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    main {
+        width: 100%;
+        height: 100vh;
+        /* Use the static background color */
+        background-color: var(--bg-color-static); 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 19rem;
+        font-weight: bold;
+        /* Use the static text color */
+        color: var(--text-color-static);
+        text-transform: uppercase; /* Looks better for single keys */
+        
+        /* Add a transition for smooth color changes */
+        transition: color 0.5s ease-out, background-color 0.1s ease-out;
+    }
+    /* New class for the 'flash' effect */
+    .flash-active {
+        background-color: var(--flash-color) !important;
+        color: var(--bg-color-static) !important;
+    }
+</style>
+</head>
+<body>
+    <main></main>
+    <script>
+    const mainElement = document.querySelector("main");
+    const flashClass = 'flash-active';
+
+    window.addEventListener("keydown", function(e){
+        // 1. Remove the class from the previous press
+        mainElement.classList.remove(flashClass);
+
+        // 2. Determine text content
+        if(e.key === " "){
+            mainElement.innerText = "SPACE"; // Better capitalization for "space"
+        } else {
+            // Display key, convert to uppercase for consistency with CSS
+            mainElement.innerText = e.key.toUpperCase();
+        };
+
+        // 3. Apply the flash class immediately (visual feedback)
+        mainElement.classList.add(flashClass);
+
+        // 4. Remove the flash class after a very short delay 
+        //    (This creates the "flash" effect)
+        setTimeout(() => {
+            mainElement.classList.remove(flashClass);
+        }, 50); // Flash for 50 milliseconds
+    });
+</script>
+</body>
+</html>

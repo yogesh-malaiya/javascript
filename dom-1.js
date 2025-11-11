@@ -96,11 +96,13 @@ document.querySelector(".dynamic").appendChild(p);
 
 
 // changing styles via DOM
-document.querySelector("h2").style.color = "#e50b0bff";
+// document.querySelector("h2").style.color = "#e50b0bff";
 
 
 //classList manipulation
-// h2.classList.add("dynamic"); // Adds the class dynamic to the h2 element
+h2.classList.add("demo"); // Adds the class dynamic to the h2 element
 console.log("After adding class:", h2);
-// h2.classList.remove("dynamic"); // Removes the class dynamic from the h2 element
-h2.classList.toggle("dynamic"); // Toggles the class dynamic on the h2 element this will remove if already present else add
+// h2.classList.remove("demo"); // Removes the class dynamic from the h2 element
+// h2.classList.toggle("demo"); // Toggles the class dynamic on the h2 element this will remove if already present else add
+
+

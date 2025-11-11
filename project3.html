@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card</title>
+    <style>
+       div>img{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+       }
+       .card{
+          border: 1px solid black;
+          width: 300px;
+          padding: 10px;
+          text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main>
+     <form action="">
+        <input type="text" placeholder="Profile pic">
+        <input type="text" placeholder="Name">
+        <input type="text" placeholder="occupation">
+        <input type="text" placeholder="Info">
+        <input type="submit" placeholder="submit">
+     </form>
+     <div class="card">
+     </div>
+   </main>
+   <script>
+    let form = document.querySelector('form');
+    let card = document.querySelector('.card');
+    let inputs = form.querySelectorAll('input[type="text"]');
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        let imgSrc = inputs[0].value;
+        let name = inputs[1].value;
+        let occupation = inputs[2].value;
+        let info = inputs[3].value;
+
+        let img = document.createElement("img");
+        let h2 = document.createElement("h2");
+        let h4 = document.createElement("h4");
+        let p = document.createElement("p");
+
+        img.src = imgSrc;
+         h2.textContent = name;
+         h4.textContent = occupation;
+         p.textContent = info;
+
+         card.appendChild(img);
+         card.appendChild(h2);
+         card.appendChild(h4);
+         card.appendChild(p);
+
+         form.reset();
+    });
+
+    
+   </script>
+</body>
+</html>
