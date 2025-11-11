@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Event</title>
+    <style>
+        body{
+            background-color: black;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        #abcd{
+            width: 200px;
+            height: 200px;
+            background-color: rgb(238, 41, 10);
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="abcd"></div>
+    <script>
+        let abcd = document.querySelector('#abcd');
+        // abcd.addEventListener("mouseover", function(){
+        //     abcd.style.backgroundColor = "red";
+        // });
+        // abcd.addEventListener("mouseout", function(){
+        //     abcd.style.backgroundColor = "lightblue";
+        // });
+        
+        window.addEventListener("mousemove", function(dets){
+            abcd.style.top = dets.clientY + "px";
+            abcd.style.left = dets.clientX + "px";
+        })
+
+    </script>
+</body>
+</html>
