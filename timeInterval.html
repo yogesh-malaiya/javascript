@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #alert {
+            width: 300px;
+            height: 400px;
+            border: 2px solid black;
+            text-align: center;
+            line-height: 100px;
+            font-size: 20px;
+            margin: 50px auto;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="alert">
+
+    </div>
+    <script>
+        // // setTimeout example
+        // let time = setTimeout(function(){
+        //     console.log("This message is shown after 3 seconds");
+        // }, 3000);
+
+        // clearTimeout(timeout); // Cancels the timeout before it executes
+
+        // let interval = setInterval(function(){
+        //     console.log("This message is shown every 2 seconds");
+        // }, 2000);
+        
+        // clearInterval(interval); // Stops the interval immediately
+
+        let alertBox = document.getElementById("alert");
+        let count = 0
+        let intvl = setInterval(function(){
+            if(count <= 3){
+                count++;
+            }else{
+                clearInterval(intvl);
+                alertBox.style.display = "none";
+            }
+        },1000);
+    </script>
+</body>
+</html>

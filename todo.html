@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        main{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1d1a1a;
+        }
+        #main{
+            width: 400px;
+            margin: 50px auto;
+            border: 2px solid black;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: black;
+        }
+        #input{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        input[type="text"]{
+            width: 70%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button{
+            width: 25%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        ol{
+            list-style-type: decimal;
+            padding-left: 20px;
+        }
+        li{
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 18px;
+            text-transform: capitalize;
+        }
+        li-completed{
+            text-decoration: line-through;
+        }
+        #removeBtn{
+            margin-left: 10px;
+            background-color: #f44336;
+        }
+
+    </style>
+</head>
+<body>
+    <main>
+        <div id="main">
+         <div id="input">
+            <input type="text" id="taskInput" placeholder="Enter a task">
+            <button id="addTaskBtn">Add Task</button>
+         </div>
+         <div id="task">
+            <div id="removeBtn">
+                <button id="clearTasksBtn" onclick="document.getElementById('list').innerHTML = '';">Clear All Tasks</button>
+            </div>
+            <ol id="list">
+                
+            </ol>
+         </div>
+        </div>
+    </main>
+    <script>
+        let addTaskBtn = document.getElementById('addTaskBtn');
+        let taskInput = document.getElementById('taskInput');
+        let list = document.getElementById('list');
+
+
+        addTaskBtn.addEventListener('click', function(){
+            let task = taskInput.value.trim();
+            if(task !== ""){
+                let li = document.createElement('li');
+                li.textContent = task;
+                list.appendChild(li);
+                taskInput.value = "";
+            }
+        });
+    </script>
+</body>
+</html>
