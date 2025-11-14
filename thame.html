@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark theme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            transition: background-color 0.5s, color 0.5s;
+            justify-content: center;
+            text-align: center;
+        }
+        #container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        #btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .dark-theme {
+            background-color: #121212;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Toggle the button to change thame</h1>
+        <button id="btn">change</button>
+    </div>
+    <script>
+        const btn = document.querySelector('#btn');
+        const systemThame = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (systemThame) {
+            document.body.classList.add('dark-theme');
+        }
+        btn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+        });
+    </script>
+</body>
+</html>
