@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>snake game</title>
+    <style>
+      :root {
+        --bg-color: #1e1e1e;
+        --text-color: #ffffff;
+        --btn-color: #ff5722;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .top-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .Board {
+        width: 100%;
+        height: 500px;
+        background-color: #333;
+        border: 2px solid var(--btn-color);
+        display: grid;
+      }
+
+      .position {
+        width: 30px;
+        height: 30px;
+        box-sizing: border-box;
+        border: 1px solid #111;
+      }
+
+      .snake {
+        background-color: #4caf50;
+      }
+
+      .snake-head {
+        background-color: #8bc34a;
+      }
+
+      .food {
+        background-color: var(--btn-color);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="top-header">
+        <div class="highScore">High Score : 0</div>
+        <h1>snake game</h1>
+        <div class="totalScore">Total Score : 0</div>
+      </div>
+      <div class="Board"></div>
+    </div>
+
+    <script>
+      const board = document.querySelector(".Board");
+      const highScoreDisplay = document.querySelector(".highScore");
+      const totalScoreDisplay = document.querySelector(".totalScore");
+
+      let highScore = 0;
+      let totalScore = 0;
+
+      const cellSize = 30;
+
+      let cols = 0;
+      let rows = 0;
+      let cells = []; // 2D array: cells[row][col]
+
+      let snake = []; // array of {x, y}
+      let direction = { x: 1, y: 0 }; // moving right initially
+      let food = null;
+      let gameInterval = null;
+      const speed = 150; // ms per move
+
+      function createGrid() {
+        board.innerHTML = "";
+
+        const boardWidth = board.clientWidth;
+        const boardHeight = board.clientHeight;
+
+        cols = Math.floor(boardWidth / cellSize);
+        rows = Math.floor(boardHeight / cellSize);
+
+        board.style.gridTemplateColumns = `repeat(${cols}, ${cellSize}px)`;
+        board.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
+
+        cells = [];
+        for (let row = 0; row < rows; row++) {
+          const rowCells = [];
+          for (let col = 0; col < cols; col++) {
+            const cell = document.createElement("div");
+            cell.classList.add("position");
+            cell.dataset.row = row;
+            cell.dataset.col = col;
+            rowCells.push(cell);
+            board.appendChild(cell);
+          }
+          cells.push(rowCells);
+        }
+      }
+
+      function initGame() {
+        // start snake at center
+        const startX = Math.floor(cols / 2);
+        const startY = Math.floor(rows / 2);
+
+        snake = [{ x: startX, y: startY }];
+        direction = { x: 1, y: 0 }; // move right first
+        totalScore = 0;
+        updateScore();
+
+        placeFood();
+        render();
+
+        if (gameInterval) clearInterval(gameInterval);
+        gameInterval = setInterval(gameLoop, speed);
+      }
+
+      function placeFood() {
+        let x, y, conflict;
+        do {
+          x = Math.floor(Math.random() * cols);
+          y = Math.floor(Math.random() * rows);
+          conflict = snake.some((part) => part.x === x && part.y === y);
+        } while (conflict);
+        food = { x, y };
+      }
+
+      function gameLoop() {
+        const head = snake[0];
+        const newHead = { x: head.x + direction.x, y: head.y + direction.y };
+
+        // wall collision
+        if (
+          newHead.x < 0 ||
+          newHead.x >= cols ||
+          newHead.y < 0 ||
+          newHead.y >= rows
+        ) {
+          return gameOver();
+        }
+
+        // self collision
+        if (
+          snake.some((part) => part.x === newHead.x && part.y === newHead.y)
+        ) {
+          return gameOver();
+        }
+
+        // add new head
+        snake.unshift(newHead);
+
+        // eat food or move
+        if (food && newHead.x === food.x && newHead.y === food.y) {
+          totalScore++;
+          if (totalScore > highScore) {
+            highScore = totalScore;
+          }
+          updateScore();
+          placeFood();
+        } else {
+          // move forward: remove tail
+          snake.pop();
+        }
+
+        render();
+      }
+
+      function render() {
+        // clear all classes
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            cells[r][c].classList.remove("snake", "snake-head", "food");
+          }
+        }
+
+        // draw food
+        if (food) {
+          cells[food.y][food.x].classList.add("food");
+        }
+
+        // draw snake
+        snake.forEach((part, index) => {
+          const cell = cells[part.y][part.x];
+          cell.classList.add("snake");
+          if (index === 0) {
+            cell.classList.add("snake-head");
+          }
+        });
+      }
+
+      function updateScore() {
+        totalScoreDisplay.textContent = `Total Score : ${totalScore}`;
+        highScoreDisplay.textContent = `High Score : ${highScore}`;
+      }
+
+      function gameOver() {
+        alert("Game Over!");
+        initGame();
+      }
+
+      // controls: arrows / WASD
+      window.addEventListener("keydown", (e) => {
+        switch (e.key) {
+          case "ArrowUp":
+          case "w":
+          case "W":
+            if (direction.y === 1) break; // prevent reverse
+            direction = { x: 0, y: -1 };
+            break;
+          case "ArrowDown":
+          case "s":
+          case "S":
+            if (direction.y === -1) break;
+            direction = { x: 0, y: 1 };
+            break;
+          case "ArrowLeft":
+          case "a":
+          case "A":
+            if (direction.x === 1) break;
+            direction = { x: -1, y: 0 };
+            break;
+          case "ArrowRight":
+          case "d":
+          case "D":
+            if (direction.x === -1) break;
+            direction = { x: 1, y: 0 };
+            break;
+        }
+      });
+
+      // setup on load + resize
+      window.addEventListener("load", () => {
+        createGrid();
+        initGame();
+      });
+
+      window.addEventListener("resize", () => {
+        createGrid();
+        initGame(); // reset game on resize
+      });
+    </script>
+  </body>
+</html>
